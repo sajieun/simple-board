@@ -6,6 +6,7 @@ import com.example.simple_board.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ public class BoardController {
     @PostMapping("")
     public BoardEntity create(
             @Valid // 검증해주는 아이
-            BoardRequest boardRequest
+            @RequestBody BoardRequest boardRequest //  무조건 @RequestBody 해줘야함
     ){
         return boardService.create(boardRequest);
     }
