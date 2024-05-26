@@ -1,9 +1,6 @@
 package com.example.simple_board.reply.db;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,19 +19,18 @@ public class ReplyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long costId;
+
     private String userName;
 
     private String password;
 
-    private String email;
-
-    private String status;
-
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime postedAt;
+    private LocalDateTime repliedAt;
 
 
 
