@@ -26,7 +26,7 @@ public class ReplyEntity {
     private String password;
 
     private String title;
-
+    //만약 text형식을 string으로 오류가 났을 땐 이렇게 설정해주면 된다
     @Column(columnDefinition = "TEXT")
     private String content;
 
