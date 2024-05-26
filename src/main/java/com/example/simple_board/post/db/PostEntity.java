@@ -1,9 +1,6 @@
 package com.example.simple_board.post.db;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +32,7 @@ public class PostEntity {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private LocalDateTime postedAt;
