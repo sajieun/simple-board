@@ -4,6 +4,8 @@ import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.db.PostRepository;
 import com.example.simple_board.post.model.PostRequest;
 import com.example.simple_board.post.model.PostViewRequest;
+import com.example.simple_board.reply.db.ReplyRepository;
+import com.example.simple_board.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.bridge.IMessage;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final ReplyService replyService;
+    private final ReplyRepository replyRepository;
 
     public PostEntity create(
             PostRequest postRequest
@@ -46,6 +50,10 @@ public class PostService {
                         var format = "패스워드가 맞지 않습니다 %s vs %s";
                         throw new RuntimeException(String.format(format,it.getPassword(),postViewRequest.getPassword()));
                     }
+                    // 답변글도 같이 작성
+                    var replyList = replyService.findAllByPostId(it.getId());
+                    it.setReplyList(replyList);
+
                     return it;
                 }).orElseThrow(
                         () -> {
@@ -68,6 +76,13 @@ public class PostService {
                     }
                     it.setStatus("UNREGISTERED");
                     postRepository.save(it);
+
+                    // 답변글 상태 변경
+                    var replyList = replyService.findAllByPostId(it.getId());
+                    for (var reply : replyList) {
+                        reply.setStatus("UNREGISTERED");
+                        replyRepository.save(reply);
+                    }
                     return it;
                 }).orElseThrow(
                         () -> {

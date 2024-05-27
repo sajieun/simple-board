@@ -1,5 +1,6 @@
 package com.example.simple_board.post.db;
 
+import com.example.simple_board.reply.db.ReplyEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +38,8 @@ public class PostEntity {
     private String content;
 
     private LocalDateTime postedAt;
+
+    @Transient // 컬럼이 아니다 라고 말해주는 어노테이션
+    private List<ReplyEntity> replyList = List.of();
+
 }

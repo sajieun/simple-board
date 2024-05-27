@@ -19,13 +19,14 @@ public class ReplyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long costId;
+    private Long postId;
 
     private String userName;
 
-    private String password;
+    private String status;
 
     private String title;
+
     //만약 text형식을 string으로 오류가 났을 땐 이렇게 설정해주면 된다
     @Column(columnDefinition = "TEXT")
     private String content;
