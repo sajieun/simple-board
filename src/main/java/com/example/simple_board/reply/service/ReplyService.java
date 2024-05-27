@@ -55,5 +55,9 @@ public class ReplyService {
         replyRepository.delete(id);
     }
 
+    public List<ReplyEntity> findAll() {
+        return replyRepository.findAll();
+    }
+
 
 }

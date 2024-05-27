@@ -37,7 +37,12 @@ public class ReplyApiController {
     public void delete2(
             @PathVariable ReplyEntity id
     ){
-        replyService.delete(id);
+        replyService.delete2(id);
+    }
+
+    @GetMapping("/all")
+    public List<ReplyEntity> findAll(){
+        return replyService.findAll();
     }
 
 
