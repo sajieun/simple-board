@@ -5,6 +5,7 @@ import com.example.simple_board.post.db.PostRepository;
 import com.example.simple_board.post.model.PostRequest;
 import com.example.simple_board.post.model.PostViewRequest;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.bridge.IMessage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -38,12 +39,12 @@ public class PostService {
             1. 게시글이 있는가?
             2. 비밀번호가 맞는가?*/
     public PostEntity view(PostViewRequest postViewRequest) {
-         return postRepository.findById(postViewRequest.getPostId())
+         return postRepository.findFirstByIdAndStatusOrderByIdDesc(postViewRequest.getPostId(),"REGISTERED")
                 .map(it ->{
                     // entity 존재
                     if (!it.getPassword().equals(postViewRequest.getPassword())){
                         var format = "패스워드가 맞지 않습니다 %s vs %s";
-                        throw new RuntimeException(String.format(format,it.getPostedAt(),postViewRequest.getPassword()));
+                        throw new RuntimeException(String.format(format,it.getPassword(),postViewRequest.getPassword()));
                     }
                     return it;
                 }).orElseThrow(
@@ -63,7 +64,7 @@ public class PostService {
                     // entity 존재
                     if (!it.getPassword().equals(postViewRequest.getPassword())){
                         var format = "패스워드가 맞지 않습니다 %s vs %s";
-                        throw new RuntimeException(String.format(format,it.getPostedAt(),postViewRequest.getPassword()));
+                        throw new RuntimeException(String.format(format,it.getPassword(),postViewRequest.getPassword()));
                     }
                     it.setStatus("UNREGISTERED");
                     postRepository.save(it);
