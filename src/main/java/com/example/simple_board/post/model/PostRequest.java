@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostRequest {
 
+    private Long boardId=1L; // 1번으로 임시고정
+
     @NotBlank
     private String userName;
 

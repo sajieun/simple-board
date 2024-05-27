@@ -1,11 +1,10 @@
 package com.example.simple_board.post.db;
 
+import com.example.simple_board.board.db.BoardEntity;
 import com.example.simple_board.reply.db.ReplyEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -22,7 +21,10 @@ public class PostEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long boardId;
+    @ManyToOne
+    @JsonIgnore // 이걸 안 넣으면 반복돼서 오류
+    @ToString.Exclude // 이걸 안 넣으면 반복돼서 오류
+    private BoardEntity board;
 
     private String userName;
 

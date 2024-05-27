@@ -1,5 +1,6 @@
 package com.example.simple_board.post.service;
 
+import com.example.simple_board.board.db.BoardRepository;
 import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.db.PostRepository;
 import com.example.simple_board.post.model.PostRequest;
@@ -20,12 +21,15 @@ public class PostService {
     private final PostRepository postRepository;
     private final ReplyService replyService;
     private final ReplyRepository replyRepository;
+    private final BoardRepository boardRepository;
+
 
     public PostEntity create(
             PostRequest postRequest
     ){
+        var boardEntity = boardRepository.findById(postRequest.getBoardId()).get();
         var entity = PostEntity.builder()
-                .boardId(1L) // 1번 임시로 고정
+                .board(boardEntity)
                 .userName(postRequest.getUserName())
                 .password(postRequest.getPassword())
                 .email(postRequest.getEmail())
