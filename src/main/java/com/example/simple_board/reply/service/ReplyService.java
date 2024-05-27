@@ -51,5 +51,9 @@ public class ReplyService {
                 });
     }
 
+    public void delete2(ReplyEntity id){
+        replyRepository.delete(id);
+    }
+
 
 }

@@ -33,4 +33,12 @@ public class ReplyApiController {
         replyService.delete(replyDeleteRequest);
     }
 
+    @DeleteMapping("/id/{id}")
+    public void delete2(
+            @PathVariable ReplyEntity id
+    ){
+        replyService.delete(id);
+    }
+
+
 }
