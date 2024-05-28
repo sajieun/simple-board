@@ -1,6 +1,8 @@
 package com.example.simple_board.post.service;
 
 import com.example.simple_board.board.db.BoardRepository;
+import com.example.simple_board.common.Api;
+import com.example.simple_board.common.Pagination;
 import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.db.PostRepository;
 import com.example.simple_board.post.model.PostRequest;
@@ -9,6 +11,7 @@ import com.example.simple_board.reply.db.ReplyRepository;
 import com.example.simple_board.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.bridge.IMessage;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -67,8 +70,25 @@ public class PostService {
                 );
     }
 
-    public List<PostEntity> all() {
-        return postRepository.findAll();
+    public Api<List<PostEntity>> all(
+            Pageable pageable
+    ) {
+        var list = postRepository.findAll(pageable);
+        var pagination = Pagination.builder()
+                .page(list.getNumber())
+                .size(list.getSize())
+                .currentElements(list.getNumberOfElements())
+                .totalElements(list.getTotalElements())
+                .totalPage(list.getTotalPages())
+                .build()
+                ;
+
+        var response = Api.<List<PostEntity>>builder()
+                .body(list.toList())
+                .pagination(pagination)
+                .build()
+                ;
+        return response;
     }
 
     public void delete(PostViewRequest postViewRequest) {

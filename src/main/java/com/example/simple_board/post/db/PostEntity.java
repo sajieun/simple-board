@@ -5,6 +5,7 @@ import com.example.simple_board.reply.db.ReplyEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DialectOverride;
 import org.hibernate.annotations.Where;
 
 import java.sql.Date;
@@ -44,6 +45,8 @@ public class PostEntity {
 
     @OneToMany(mappedBy = "post")
     @Where(clause = "status = 'REGISTERED'")
+    @Builder.Default
+    @org.hibernate.annotations.OrderBy(clause = "id desc") // 내림차순으로 정렬
     private List<ReplyEntity> replyList = List.of();
 
 }
