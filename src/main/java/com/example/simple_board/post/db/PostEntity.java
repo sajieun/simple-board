@@ -5,6 +5,7 @@ import com.example.simple_board.reply.db.ReplyEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -41,7 +42,8 @@ public class PostEntity {
 
     private LocalDateTime postedAt;
 
-    @Transient // 컬럼이 아니다 라고 말해주는 어노테이션
+    @OneToMany(mappedBy = "post")
+    @Where(clause = "status = 'REGISTERED'")
     private List<ReplyEntity> replyList = List.of();
 
 }

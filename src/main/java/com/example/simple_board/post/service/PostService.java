@@ -54,9 +54,10 @@ public class PostService {
                         var format = "패스워드가 맞지 않습니다 %s vs %s";
                         throw new RuntimeException(String.format(format,it.getPassword(),postViewRequest.getPassword()));
                     }
-                    // 답변글도 같이 작성
-                    var replyList = replyService.findAllByPostId(it.getId());
-                    it.setReplyList(replyList);
+//                     답변글도 같이 작성
+//                    var replyList = replyService.findAllByPostId(it.getId());
+//                    it.setReplyList(replyList);
+//                    이제 관계를 넣어서 자동으로 가져오기에 안 넣어줘도됨
 
                     return it;
                 }).orElseThrow(

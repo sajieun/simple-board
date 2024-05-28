@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class BoardEntity {
 
 
     @OneToMany(mappedBy = "board")
+    @Where(clause = "status = 'REGISTERED'")
     private List<PostEntity> postEntityList = List.of();
 
 
