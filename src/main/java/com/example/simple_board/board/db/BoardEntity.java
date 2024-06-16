@@ -31,6 +31,4 @@ public class BoardEntity {
     @Where(clause = "status = 'REGISTERED'")
     @Builder.Default // default로 리스트 오브가 만들어질 수 있도록
     private List<PostEntity> postEntityList = List.of();
-
-
 }
