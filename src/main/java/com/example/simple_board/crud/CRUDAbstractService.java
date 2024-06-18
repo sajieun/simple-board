@@ -4,8 +4,8 @@ import com.example.simple_board.common.Api;
 import com.example.simple_board.common.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,9 +40,13 @@ public class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<DTO> {
     public Optional<DTO> read(Long id) {
         var optionalEntity = jpaRepository.findById(id);
 
-        var dto = optionalEntity;
+        var dto = optionalEntity.map(
+                it ->{
+                    return converter.toDto(it);
+                }
+        ).orElseGet(()->null);
 
-        return (Optional<DTO>) Optional.ofNullable(dto);
+        return Optional.ofNullable(dto);
     }
 
     @Override
@@ -60,7 +64,7 @@ public class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<DTO> {
     }
 
     @Override
-    public Api<List<DTO>> list(org.springframework.data.domain.Pageable pageable) {
+    public Api<List<DTO>> list(Pageable pageable) {
         var list = jpaRepository.findAll(pageable);
 
         var pagination = Pagination.builder()
@@ -85,4 +89,5 @@ public class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<DTO> {
 
         return response;
     }
+
 }
