@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class CRUDAbstractApiController<DTO,ENTITY> implements CRUDInterface<DTO>{
+public abstract class CRUDAbstractApiController<DTO,ENTITY> implements CRUDInterface<DTO>{
 
     @Autowired(required = false)
     private CRUDAbstractService<DTO,ENTITY> crudAbstractService;
@@ -35,11 +35,11 @@ public class CRUDAbstractApiController<DTO,ENTITY> implements CRUDInterface<DTO>
 
     @PutMapping("")
     @Override
-    public DTO updadte(
+    public DTO update(
             @Valid
             @RequestBody
             DTO t) {
-        return crudAbstractService.updadte(t);
+        return crudAbstractService.update(t);
     }
 
     @DeleteMapping("")

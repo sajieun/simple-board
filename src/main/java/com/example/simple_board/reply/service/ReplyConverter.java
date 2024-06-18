@@ -17,7 +17,7 @@ public class ReplyConverter implements Converter<ReplyDto, ReplyEntity> {
     @Override
     public ReplyDto toDto(ReplyEntity replyEntity) {
 
-        ReplyDto.builder()
+        return ReplyDto.builder()
                 .id(replyEntity.getId())
                 .postId(replyEntity.getPost().getId())
                 .status(replyEntity.getStatus())
@@ -25,9 +25,7 @@ public class ReplyConverter implements Converter<ReplyDto, ReplyEntity> {
                 .content(replyEntity.getContent())
                 .userName(replyEntity.getUserName())
                 .repliedAt(replyEntity.getRepliedAt())
-                .build()
-                ;
-        return null;
+                .build();
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface CRUDInterface<DTO> {
 
     Optional<DTO> read(Long id);
 
-    DTO updadte(DTO t);
+    DTO update(DTO t);
 
     // 반환하지 않아서 void
     void delete(Long id);

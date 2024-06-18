@@ -3,6 +3,7 @@ package com.example.simple_board.reply.model;
 import com.example.simple_board.post.db.PostEntity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.GeneratedValue;
 import lombok.*;
 
 import java.time.LocalDateTime;

@@ -24,29 +24,29 @@ public class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<DTO> {
 
         // dto -> entity
         var entity = converter.toEntity(dto);
+        System.out.println(entity);
         // entity -> save
         jpaRepository.save(entity);
+        System.out.println(entity);
 
         // save -> dto
         var returnDto = converter.toDto(entity);
+        System.out.println(returnDto);
 
         return returnDto;
     }
 
     @Override
     public Optional<DTO> read(Long id) {
+        var optionalEntity = jpaRepository.findById(id);
 
-        var optionalENTITY = jpaRepository.findById(id);
+        var dto = optionalEntity;
 
-        var dto = optionalENTITY.map(
-                it -> converter.toDto(it)
-        ).orElseGet(() -> null);
-
-        return Optional.ofNullable(dto);
+        return (Optional<DTO>) Optional.ofNullable(dto);
     }
 
     @Override
-    public DTO updadte(DTO dto) {
+    public DTO update(DTO dto) {
         var entity = converter.toEntity(dto);
         jpaRepository.save(entity);
         var returnDto = converter.toDto(entity);
