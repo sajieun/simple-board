@@ -103,11 +103,11 @@ public class PostService {
                     postRepository.save(it);
 
                     // 답변글 상태 변경
-                    var replyList = replyService.findAllByPostId(it.getId());
-                    for (var reply : replyList) {
-                        reply.setStatus("UNREGISTERED");
-                        replyRepository.save(reply);
-                    }
+//                    var replyList = replyService.findAllByPostId(it.getId());
+//                    for (var reply : replyList) {
+//                        reply.setStatus("UNREGISTERED");
+//                        replyRepository.save(reply);
+//                    }
                     return it;
                 }).orElseThrow(
                         () -> {

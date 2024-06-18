@@ -1,8 +1,8 @@
 package com.example.simple_board.crud;
 
 import com.example.simple_board.common.Api;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 

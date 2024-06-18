@@ -3,7 +3,6 @@ package com.example.simple_board.crud;
 import com.example.simple_board.common.Api;
 import com.example.simple_board.common.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.awt.print.Pageable;
@@ -12,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 // dto -> entity -> dto
-public class CRUDAbstactService<DTO, ENTITY> implements CRUDInterface<DTO> {
+public class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<DTO> {
 
     @Autowired(required = false)
     private JpaRepository<ENTITY,Long> jpaRepository;
@@ -61,8 +60,8 @@ public class CRUDAbstactService<DTO, ENTITY> implements CRUDInterface<DTO> {
     }
 
     @Override
-    public Api<List<DTO>> list(Pageable pageable) {
-        var list = jpaRepository.findAll((org.springframework.data.domain.Pageable) pageable);
+    public Api<List<DTO>> list(org.springframework.data.domain.Pageable pageable) {
+        var list = jpaRepository.findAll(pageable);
 
         var pagination = Pagination.builder()
                 .page(list.getNumber())
@@ -74,13 +73,16 @@ public class CRUDAbstactService<DTO, ENTITY> implements CRUDInterface<DTO> {
                 ;
 
         var dtoList = list.stream()
-                .map(it -> converter.toDto(it)).collect(Collectors.toList());
+                .map(it->{
+                    return converter.toDto(it);
+                })
+                .collect(Collectors.toList());
 
         var response = Api.<List<DTO>>builder()
                 .body(dtoList)
                 .pagination(pagination)
-                .build()
-                ;
+                .build();
+
         return response;
     }
 }
